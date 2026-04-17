@@ -7,3 +7,6 @@ instalando as dependencias
 caso queira instalar as dependencias dentro do repositorio, recomendado utilizar
 npm install -D mocha supertest chai
 Para os relatorios é utilozado o mochaawesome
+gerenciador de dependencias
+para gerenciador de dependencia utilizar dotenv
+- npm install doteenv
