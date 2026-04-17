@@ -1,16 +1,17 @@
 import { expect } from 'chai';
 import request from 'supertest';
+import dotenv from 'dotenv';
+dotenv.config();
+import postLogin from '../fixtures/postLogin.json' assert { type: 'json' };
 
 describe('Login', () => {
     describe('POST /login', () => {
         it('Deve retornar 200 com um token em string', async () => {
-            const response = await request('http://localhost:3000')
+            const bodyLogin = { ...postLogin}
+            const response = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
-                .send({
-                    username: 'julio.lima',
-                    senha: '123456'
-                });
+                .send(bodyLogin);
             
             expect(response.status).to.equal(200);
             expect(response.body.token).to.be.a('string');
