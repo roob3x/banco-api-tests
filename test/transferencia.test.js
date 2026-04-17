@@ -1,10 +1,12 @@
 import { expect } from 'chai';
 import request from 'supertest';
+import dotenv from 'dotenv';
+dotenv.config();
 
 describe('Transferencias', () => {
     describe('POST /transferencias', () => {
         it('Deve retornar sucesso com 201 quando o valor da transferencia for igual ou acima de 10 reais', async () => {
-            const responseLogin = await request('http://localhost:3000')
+            const responseLogin = await request(process.env.BASE_URL)
                             .post('/login')
                             .set('Content-Type', 'application/json')
                             .send({
@@ -13,7 +15,7 @@ describe('Transferencias', () => {
                             });
             const token = responseLogin.body.token
 
-            const response = await request('http://localhost:3000')
+            const response = await request(process.env.BASE_URL)
             .post('/transferencias')
             .set('Content-Type', 'application/json')
             .set('Authorization', `Bearer ${token}` )
@@ -27,7 +29,7 @@ describe('Transferencias', () => {
             console.log(response.body)
         })
         it('Deve retornar sucesso com 422 quando o valor da transferencia for abaixo de 10 reais', async () => {
-            const responseLogin = await request('http://localhost:3000')
+            const responseLogin = await request(process.env.BASE_URL)
                 .post('/login')
                 .set('Content-Type', 'application/json')
                 .send({
@@ -35,8 +37,8 @@ describe('Transferencias', () => {
                     senha: '123456'
                 });
             const token = responseLogin.body.token
-            
-            const response = await request('http://localhost:3000')
+
+            const response = await request(process.env.BASE_URL)
             .post('/transferencias')
             .set('Content-Type', 'application/json')
             .set('Authorization', `Bearer ${token}`)
