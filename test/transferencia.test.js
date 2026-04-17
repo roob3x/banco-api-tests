@@ -3,6 +3,7 @@ import request from 'supertest';
 import dotenv from 'dotenv';
 dotenv.config();
 import { obterToken } from '../helpers/autenticacao.js';
+import postTransferencias from '../fixtures/postTransferencias.json' assert { type: 'json' };
 
 describe('Transferencias', () => {
     describe('POST /transferencias', async() => {
@@ -13,8 +14,10 @@ describe('Transferencias', () => {
             token = await obterToken('julio.lima', '123456')
 
         })
-        
+
         it('Deve retornar sucesso com 201 quando o valor da transferencia for igual ou acima de 10 reais', async () => {
+            const bodyTransferencias = { ...postTransferencias}
+            bodyTransferencias.valor = 7
             const response = await request(process.env.BASE_URL)
             .post('/transferencias')
             .set('Content-Type', 'application/json')
